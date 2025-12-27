@@ -1,0 +1,61 @@
+# IDE and Editor files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.code-workspace
+.settings/
+.project
+.classpath
+.factorypath
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+.metadata/
+.recommenders/
+*.launch
+.externalToolBuilders/
+
+# Java build tools
+target/
+build/
+dist/
+bin/
+out/
+.gradle/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+.gradletasknamecache
+
+# Compiled files
+*.log
+*.tmp
+*.bak
+*.cache
+.sass-cache/

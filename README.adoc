@@ -1,0 +1,5 @@
+= bmarwell.de
+
+Landing page / hub of bmarwell.de plus linktree Benjamin Marwell.
+
+This repository will only host a single static HTML site.
