@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benjamin Marwell | Links & Projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-bg: #f5f5f5;
+      --card-bg: #ffffff;
+      --text-main: #212121;
+      --text-sub: #757575;
+      --shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--primary-bg);
+      color: var(--text-main);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    /* Grid System */
+    .container {
+      display: grid;
+      grid-template-columns: 1fr; /* Mobile: 1 Spalte */
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        grid-template-columns: 1fr 1fr; /* Desktop: 2 Spalten */
+      }
+    }
+
+    /* Card Design */
+    .card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .card-icon {
+      flex: 0 0 20%; /* Max 20% Breite */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-icon svg, .card-icon img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .card-content {
+      flex: 1;
+      padding-left: 15px;
+    }
+
+    .card-title {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .card-subtitle {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 5px;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://blog.bmarwell.de/img/bmarwell.jpg" alt="Benjamin Marwell">
+  <h1>Benjamin Marwell</h1>
+  <p>Software Engineer & Tech Blogger</p>
+</header>
+
+<div class="container">
+  <a href="https://blog.bmarwell.de" class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24" fill="#1976D2"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 18H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V8h2v2zm10 8h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V8h8v2z"/></svg>
+    </div>
+    <div class="card-content">
+      <span class="card-title">Technical Blog</span>
+      <span class="card-subtitle">blog.bmarwell.de</span>
+      <p class="card-desc">Deep dives into Maven, Java, and infrastructure.</p>
+    </div>
+  </a>
+
+  <a href="https://github.com/bmarwell" class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24" fill="#333"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </div>
+    <div class="card-content">
+      <span class="card-title">GitHub</span>
+      <span class="card-subtitle">@bmarwell</span>
+      <p class="card-desc">Open Source contributions and JBake templates.</p>
+    </div>
+  </a>
+
+  <a href="https://bsky.app/profile/bmarwell.de" class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24" fill="#0085ff"><path d="M12 10.8c-1.32-2.34-4.56-6.62-7.56-6.62-2.1 0-3.42 1.56-3.42 3.42 0 2.28 2.58 10.02 2.58 10.02.3 1.08 1.2 1.38 2.1 1.08.72-.24 1.32-.48 1.92-.72.48-.18 1.38-.48 2.38-.48 1.02 0 1.92.3 2.4.48.6.24 1.2.48 1.92.72.9.3 1.8 0 2.1-1.08 0 0 2.58-7.74 2.58-10.02 0-1.86-1.32-3.42-3.42-3.42-3 0-6.24 4.28-7.56 6.62Z"/></svg>
+    </div>
+    <div class="card-content">
+      <span class="card-title">Bluesky</span>
+      <span class="card-subtitle">@bmarwell.de</span>
+      <p class="card-desc">Updates from the Java and Build Tools world.</p>
+    </div>
+  </a>
+
+  <a href="https://layer8.space/@bmarwell" class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24" fill="#6364FF"><path d="M23.193 7.879c0-5.206-3.411-6.593-3.411-6.593C18.062.549 15.109.202 12.039.202h-.077c-3.069 0-6.024.347-7.743 1.084 0 0-3.411 1.387-3.411 6.593 0 1.064-.051 2.274-.006 3.447.06 1.567.922 7.633 4.75 8.185 1.504.245 2.957.346 4.031.312 2.231-.07 3.532-.6 3.532-.6l-.06-1.207s-1.923.587-4.132.538c-2.214-.03-4.434-.234-4.71-2.99-.033-.303-.042-.612-.042-.903 0 0 2.274.573 5.026.682 1.556.063 3.037-.12 4.461-.285 2.55-.302 4.7-.939 4.7-4.164V7.879z"/></svg>
+    </div>
+    <div class="card-content">
+      <span class="card-title">Mastodon</span>
+      <span class="card-subtitle">@bmarwell@layer8.space</span>
+      <p class="card-desc">Technical microblogging and Fediverse chatter.</p>
+    </div>
+  </a>
+</div>
+
+</body>
+</html>
