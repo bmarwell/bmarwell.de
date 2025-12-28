@@ -1,132 +1,44 @@
-# SEO-friendly URL normalization for bmarwell.de
-# Ensures a single canonical URL to avoid duplicate content penalties
+# SEO normalization
+RewriteEngine On
+RewriteBase /
 
-# Enable mod_rewrite for URL manipulation
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
+# WWW redirect
+RewriteCond %{HTTP_HOST} ^www\.bmarwell\.de$ [NC]
+RewriteRule ^(.*)$ https://bmarwell.de/$1 [R=301,L]
 
-    # Serve pre-compressed files if they exist
-    # Priority: .zst (best) > .br (excellent) > .gz (universal)
+# index.html redirect
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
+RewriteRule ^index\.html$ https://bmarwell.de/ [R=301,L]
 
-    # Serve pre-compressed Zstandard files
-    RewriteCond %{HTTP:Accept-Encoding} zstd
-    RewriteCond %{REQUEST_FILENAME}.zst -f
-    RewriteRule ^(.*)$ $1.zst [L]
+# Pre-compressed file serving
+RewriteCond %{HTTP:Accept-Encoding} zstd [NC]
+RewriteCond %{REQUEST_FILENAME}.zst -f
+RewriteRule ^(.*)$ $1.zst [L,T=text/html]
 
-    # Serve pre-compressed Brotli files
-    RewriteCond %{HTTP:Accept-Encoding} br
-    RewriteCond %{REQUEST_FILENAME}.br -f
-    RewriteRule ^(.*)$ $1.br [L]
+RewriteCond %{HTTP:Accept-Encoding} br [NC]
+RewriteCond %{REQUEST_FILENAME}.br -f
+RewriteRule ^(.*)$ $1.br [L,T=text/html]
 
-    # Serve pre-compressed Gzip files
-    RewriteCond %{HTTP:Accept-Encoding} gzip
-    RewriteCond %{REQUEST_FILENAME}.gz -f
-    RewriteRule ^(.*)$ $1.gz [L]
+RewriteCond %{HTTP:Accept-Encoding} gzip [NC]
+RewriteCond %{REQUEST_FILENAME}.gz -f
+RewriteRule ^(.*)$ $1.gz [L,T=text/html]
 
-    # 1. Redirect www subdomain to non-www (301 permanent)
-    # Why: Consolidates link equity and prevents duplicate content issues
-    # The canonical URL is https://bmarwell.de/ without www
-    RewriteCond %{HTTP_HOST} ^www\.bmarwell\.de$ [NC]
-    RewriteRule ^(.*)$ https://bmarwell.de/$1 [R=301,L]
-
-    # 2. Redirect index.html to root directory (301 permanent)
-    # Why: Prevents /index.html and / from being indexed as separate pages
-    # Maintains clean URLs and consolidates page authority
-    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
-    RewriteRule ^index\.html$ https://bmarwell.de/ [R=301,L]
-    
-    # Alternative rule for direct index.html access
-    RewriteCond %{REQUEST_URI} ^/index\.html$
-    RewriteRule ^index\.html$ / [R=301,L]
-</IfModule>
-
-# Content-Type headers for pre-compressed files
-<IfModule mod_headers.c>
-    # Zstandard
-    <FilesMatch "\.html\.zst$">
-        Header set Content-Encoding zstd
+# Set headers for compressed files
+<FilesMatch "\.(zst|br|gz)$">
+    <IfModule mod_headers.c>
         Header set Content-Type "text/html; charset=utf-8"
-    </FilesMatch>
+        Header set Vary "Accept-Encoding"
+    </IfModule>
+</FilesMatch>
 
-    # Brotli
-    <FilesMatch "\.html\.br$">
-        Header set Content-Encoding br
-        Header set Content-Type "text/html; charset=utf-8"
-    </FilesMatch>
+<FilesMatch "\.zst$">
+    Header set Content-Encoding "zstd"
+</FilesMatch>
 
-    # Gzip
-    <FilesMatch "\.html\.gz$">
-        Header set Content-Encoding gzip
-        Header set Content-Type "text/html; charset=utf-8"
-    </FilesMatch>
+<FilesMatch "\.br$">
+    Header set Content-Encoding "br"
+</FilesMatch>
 
-    # Vary header for proper caching
-    Header append Vary Accept-Encoding
-</IfModule>
-
-# Security: Prevent directory listing
-Options -Indexes
-
-# Performance: Multi-tier compression with fallback strategy
-# Priority: Zstandard (best compression) > Brotli (excellent) > Gzip (universal)
-# Modern browsers negotiate the best available compression via Accept-Encoding
-
-# Zstandard compression (mod_zstd) - Best compression ratio, lowest CPU
-<IfModule mod_zstd.c>
-    SetOutputFilter ZSTD
-    # Text-based content types
-    AddOutputFilterByType ZSTD text/html text/plain text/xml text/css text/javascript
-    AddOutputFilterByType ZSTD application/javascript application/json application/xml
-    AddOutputFilterByType ZSTD application/rss+xml application/atom+xml
-    AddOutputFilterByType ZSTD image/svg+xml
-    # Zstandard quality level (1-22, default 3, higher = better compression but slower)
-    ZstdCompressionLevel 9
-</IfModule>
-
-# Brotli compression (mod_brotli) - Excellent for static content
-<IfModule mod_brotli.c>
-    SetOutputFilter BROTLI_COMPRESS
-    # Text-based content types
-    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript
-    AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json application/xml
-    AddOutputFilterByType BROTLI_COMPRESS application/rss+xml application/atom+xml
-    AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
-    # Brotli quality level (0-11, default 6, 11 = maximum compression)
-    BrotliCompressionQuality 8
-</IfModule>
-
-# Gzip/Deflate compression (mod_deflate) - Universal fallback
-<IfModule mod_deflate.c>
-    SetOutputFilter DEFLATE
-    # Text-based content types
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
-    AddOutputFilterByType DEFLATE application/javascript application/json application/xml
-    AddOutputFilterByType DEFLATE application/rss+xml application/atom+xml
-    AddOutputFilterByType DEFLATE image/svg+xml
-    
-    # Don't compress already-compressed formats
-    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp|zip|gz|bz2|7z|rar)$ no-gzip
-    
-    # Handle browser-specific quirks
-    BrowserMatch ^Mozilla/4 gzip-only-text/html
-    BrowserMatch ^Mozilla/4\.0[678] no-gzip
-    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
-    
-    # Compression level (1-9, default 6)
-    # DeflateCompressionLevel not allowed here
-    # DeflateCompressionLevel 6
-</IfModule>
-
-# Priority handling: Apache automatically selects the best compression
-# based on client Accept-Encoding header and available server modules
-
-# Caching: Set appropriate cache headers for static assets
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType text/html "access plus 1 hour"
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/svg+xml "access plus 1 year"
-</IfModule>
+<FilesMatch "\.gz$">
+    Header set Content-Encoding "gzip"
+</FilesMatch>
