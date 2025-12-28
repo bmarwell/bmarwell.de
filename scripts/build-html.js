@@ -30,6 +30,8 @@ async function main() {
     '--use-short-doctype ' +
     '--minify-css true ' +
     '--minify-js true ' +
+    '--minify-urls true ' +
+    `--process-scripts "application/ld+json" ` +
     `-o ${DIST_DIR}/index.html ${SRC_DIR}/index.html`,
     { stdio: 'inherit' }
   );
