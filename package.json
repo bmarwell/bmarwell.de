@@ -29,7 +29,8 @@
     "imagemin-mozjpeg": "^10.0.0",
     "imagemin-optipng": "^8.0.0",
     "pako": "^2.1.0",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "sharp": "^0.34.5"
   },
   "keywords": [
     "personal-website",
