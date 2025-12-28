@@ -10,7 +10,8 @@ RewriteRule ^(.*)$ https://bmarwell.de/$1 [R=301,L]
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
 RewriteRule ^index\.html$ https://bmarwell.de/ [R=301,L]
 
-# Pre-compressed file serving
+# Pre-compressed file serving for HTML only
+# Note: woff2 fonts are already optimally compressed, no pre-compression needed
 RewriteCond %{HTTP:Accept-Encoding} zstd [NC]
 RewriteCond %{REQUEST_FILENAME}.zst -f
 RewriteRule ^(.*)$ $1.zst [L,T=text/html]
@@ -23,14 +24,15 @@ RewriteCond %{HTTP:Accept-Encoding} gzip [NC]
 RewriteCond %{REQUEST_FILENAME}.gz -f
 RewriteRule ^(.*)$ $1.gz [L,T=text/html]
 
-# Set headers for compressed files
-<FilesMatch "\.(zst|br|gz)$">
+# Set headers for compressed HTML files
+<FilesMatch "\.(html|htm)\.(zst|br|gz)$">
     <IfModule mod_headers.c>
         Header set Content-Type "text/html; charset=utf-8"
         Header set Vary "Accept-Encoding"
     </IfModule>
 </FilesMatch>
 
+# Content-Encoding headers
 <FilesMatch "\.zst$">
     Header set Content-Encoding "zstd"
 </FilesMatch>
@@ -42,3 +44,10 @@ RewriteRule ^(.*)$ $1.gz [L,T=text/html]
 <FilesMatch "\.gz$">
     Header set Content-Encoding "gzip"
 </FilesMatch>
+
+# Cache headers
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
