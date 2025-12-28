@@ -1,0 +1,42 @@
+# SEO-friendly URL normalization for bmarwell.de
+# Ensures a single canonical URL to avoid duplicate content penalties
+
+# Enable mod_rewrite for URL manipulation
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 1. Redirect www subdomain to non-www (301 permanent)
+    # Why: Consolidates link equity and prevents duplicate content issues
+    # The canonical URL is https://bmarwell.de/ without www
+    RewriteCond %{HTTP_HOST} ^www\.bmarwell\.de$ [NC]
+    RewriteRule ^(.*)$ https://bmarwell.de/$1 [R=301,L]
+
+    # 2. Redirect index.html to root directory (301 permanent)
+    # Why: Prevents /index.html and / from being indexed as separate pages
+    # Maintains clean URLs and consolidates page authority
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
+    RewriteRule ^index\.html$ https://bmarwell.de/ [R=301,L]
+    
+    # Alternative rule for direct index.html access
+    RewriteCond %{REQUEST_URI} ^/index\.html$
+    RewriteRule ^index\.html$ / [R=301,L]
+</IfModule>
+
+# Security: Prevent directory listing
+Options -Indexes
+
+# Performance: Enable compression for text-based resources
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
+
+# Caching: Set appropriate cache headers for static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
