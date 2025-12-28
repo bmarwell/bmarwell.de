@@ -141,9 +141,14 @@
       padding: 40px 20px;
     }
 
+    .header-container {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 40px;
+    }
+
     header {
       text-align: center;
-      margin-bottom: 40px;
     }
 
     header img {
@@ -247,30 +252,51 @@
       font-size: 0.9rem;
       line-height: 1.4;
     }
+
+    .subtitle {
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin: 10px 0 0;
+    }
+
+    .bio {
+      max-width: 900px;
+      margin: 15px auto 0;
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
 
-<header>
-  <a href="https://bmarwell.de/" rel="home" title="Benjamin Marwell - Home">
-    <picture>
-      <source srcset="https://github.com/bmarwell.png" type="image/webp">
-      <img src="https://github.com/bmarwell.png"
-           alt="Benjamin Marwell - Apache Maven PMC Member and DevSecOps Engineer">
-    </picture>
-  </a>
-  <h1>Benjamin Marwell</h1>
-  <h2 style="font-size: 1.4rem; font-weight: 400; margin: 10px 0 0;">Apache Maven PMC Member |
-    DevSecOps Engineer | Java Expert</h2>
-  <p style="max-width: 900px; margin: 15px auto 0; line-height: 1.6;">
-    DevSecOps Engineer specializing in Java, Apache Maven, and WebSphere with over 18 years of
-    experience at Finanz Informatik,
-    focusing on deployment automation since 2014.
-    Apache Software Foundation Member and PMC member of Apache Maven and Apache Shiro,
-    contributing to open source tooling and build infrastructure.
-    Occasional conference speaker sharing expertise on Java ecosystems and Maven best practices.
-  </p>
-</header>
+<div class="header-container">
+  <header>
+    <a href="https://bmarwell.de/" rel="home" title="Benjamin Marwell - Home">
+      <picture>
+        <source srcset="/avatar.webp" type="image/webp">
+        <img src="/avatar.jpg"
+             alt="Benjamin Marwell - Apache Maven PMC Member and DevSecOps Engineer">
+      </picture>
+    </a>
+    <h1>Benjamin Marwell</h1>
+    <h2 class="subtitle">Apache Maven PMC Member | DevSecOps Engineer | Java Expert</h2>
+    <p class="bio">
+      DevSecOps Engineer specializing in Java, Apache Maven, and WebSphere with over 18 years of
+      experience at Finanz Informatik,
+      focusing on deployment automation since 2014.
+      Apache Software Foundation Member and PMC member of Apache Maven and Apache Shiro,
+      contributing to open source tooling and build infrastructure.
+      Occasional conference speaker sharing expertise on Java ecosystems and Maven best practices.
+    </p>
+  </header>
+</div>
 
 <main>
 <div class="container">
@@ -421,6 +447,10 @@
 
 </div>
 </main>
+
+<footer>
+  <p>&copy; {{YEAR}} Benjamin Marwell</p>
+</footer>
 
 </body>
 </html>
