@@ -36,6 +36,15 @@ out/
 hs_err_pid*
 replay_pid*
 
+# Node.js
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+
 # Maven
 pom.xml.tag
 pom.xml.releaseBackup

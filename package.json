@@ -1,0 +1,35 @@
+{
+  "name": "bmarwell-website",
+  "version": "1.0.0",
+  "description": "Personal website for Benjamin Marwell with optimized build pipeline",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "npm run build:html && npm run build:compress",
+    "build:html": "npm run build:minify",
+    "build:minify": "mkdir -p dist && html-minifier-terser --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true -o dist/index.html src/main/html/index.html && cp src/main/html/.htaccess dist/.htaccess",
+    "build:compress": "npm run compress:zstd && npm run compress:brotli && npm run compress:gzip",
+    "compress:zstd": "node scripts/compress-zstd.js",
+    "compress:brotli": "node scripts/compress-brotli.js",
+    "compress:gzip": "node scripts/compress-gzip.js",
+    "serve": "http-server dist -p 8080 -c-1 --brotli --gzip",
+    "preview": "npm run build && npm run serve"
+  },
+  "devDependencies": {
+    "@mongodb-js/zstd": "^2.0.1",
+    "brotli": "^1.3.3",
+    "html-minifier-terser": "^7.2.0",
+    "http-server": "^14.1.1",
+    "pako": "^2.1.0",
+    "rimraf": "^6.0.1"
+  },
+  "keywords": [
+    "personal-website",
+    "portfolio",
+    "static-site"
+  ],
+  "author": "Benjamin Marwell",
+  "license": "SEE LICENSE IN LICENSE-APACHE-2.0 OR LICENSE-EUPL-1.2"
+}

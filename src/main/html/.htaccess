@@ -6,6 +6,24 @@
     RewriteEngine On
     RewriteBase /
 
+    # Serve pre-compressed files if they exist
+    # Priority: .zst (best) > .br (excellent) > .gz (universal)
+
+    # Serve pre-compressed Zstandard files
+    RewriteCond %{HTTP:Accept-Encoding} zstd
+    RewriteCond %{REQUEST_FILENAME}.zst -f
+    RewriteRule ^(.*)$ $1.zst [L]
+
+    # Serve pre-compressed Brotli files
+    RewriteCond %{HTTP:Accept-Encoding} br
+    RewriteCond %{REQUEST_FILENAME}.br -f
+    RewriteRule ^(.*)$ $1.br [L]
+
+    # Serve pre-compressed Gzip files
+    RewriteCond %{HTTP:Accept-Encoding} gzip
+    RewriteCond %{REQUEST_FILENAME}.gz -f
+    RewriteRule ^(.*)$ $1.gz [L]
+
     # 1. Redirect www subdomain to non-www (301 permanent)
     # Why: Consolidates link equity and prevents duplicate content issues
     # The canonical URL is https://bmarwell.de/ without www
@@ -21,6 +39,30 @@
     # Alternative rule for direct index.html access
     RewriteCond %{REQUEST_URI} ^/index\.html$
     RewriteRule ^index\.html$ / [R=301,L]
+</IfModule>
+
+# Content-Type headers for pre-compressed files
+<IfModule mod_headers.c>
+    # Zstandard
+    <FilesMatch "\.html\.zst$">
+        Header set Content-Encoding zstd
+        Header set Content-Type "text/html; charset=utf-8"
+    </FilesMatch>
+
+    # Brotli
+    <FilesMatch "\.html\.br$">
+        Header set Content-Encoding br
+        Header set Content-Type "text/html; charset=utf-8"
+    </FilesMatch>
+
+    # Gzip
+    <FilesMatch "\.html\.gz$">
+        Header set Content-Encoding gzip
+        Header set Content-Type "text/html; charset=utf-8"
+    </FilesMatch>
+
+    # Vary header for proper caching
+    Header append Vary Accept-Encoding
 </IfModule>
 
 # Security: Prevent directory listing
