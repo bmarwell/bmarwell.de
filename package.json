@@ -7,10 +7,11 @@
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "build": "npm run build:html && npm run build:fonts && npm run build:compress",
+    "build": "npm run build:html && npm run build:fonts && npm run build:avatar && npm run build:compress",
     "build:html": "npm run build:minify",
     "build:minify": "mkdir -p dist && html-minifier-terser --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true -o dist/index.html src/main/html/index.html && cp src/main/html/.htaccess dist/.htaccess",
     "build:fonts": "node scripts/copy-fonts.js",
+    "build:avatar": "node scripts/download-avatar.js",
     "build:compress": "npm run compress:zstd && npm run compress:brotli && npm run compress:gzip",
     "compress:zstd": "node scripts/compress-zstd.js",
     "compress:brotli": "node scripts/compress-brotli.js",
@@ -25,6 +26,9 @@
     "google-fonts-helper": "^3.7.3",
     "html-minifier-terser": "^7.2.0",
     "http-server": "^14.1.1",
+    "imagemin": "^9.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-optipng": "^8.0.0",
     "pako": "^2.1.0",
     "rimraf": "^6.0.1"
   },
