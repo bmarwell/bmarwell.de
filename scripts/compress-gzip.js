@@ -9,7 +9,7 @@ import path from 'path';
 import pako from 'pako';
 
 const DIST_DIR = 'dist';
-const COMPRESSION_LEVEL = 9; // Maximum compression (0-9)
+const COMPRESSION_LEVEL = process.env.GZIP_LEVEL ? parseInt(process.env.GZIP_LEVEL, 10) : 9;
 const FILES_TO_COMPRESS = ['index.html'];
 
 async function compressFile(filePath) {
@@ -37,7 +37,7 @@ async function compressFile(filePath) {
 }
 
 async function main() {
-  console.log('\n🗜️  Compressing with Gzip (level 9)...');
+  console.log(`\n🗜️  Compressing with Gzip (level ${COMPRESSION_LEVEL})...`);
   
   for (const file of FILES_TO_COMPRESS) {
     const filePath = path.join(DIST_DIR, file);

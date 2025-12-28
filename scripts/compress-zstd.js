@@ -9,7 +9,7 @@ import path from 'path';
 import zstd from '@mongodb-js/zstd';
 
 const DIST_DIR = 'dist';
-const COMPRESSION_LEVEL = 22; // Maximum compression for static content
+const COMPRESSION_LEVEL = process.env.ZSTD_LEVEL ? parseInt(process.env.ZSTD_LEVEL, 10) : 22;
 const FILES_TO_COMPRESS = ['index.html'];
 
 async function compressFile(filePath) {
@@ -31,7 +31,7 @@ async function compressFile(filePath) {
 }
 
 async function main() {
-  console.log('\n🗜️  Compressing with Zstandard (level 22)...');
+  console.log(`\n🗜️  Compressing with Zstandard (level ${COMPRESSION_LEVEL})...`);
   
   for (const file of FILES_TO_COMPRESS) {
     const filePath = path.join(DIST_DIR, file);

@@ -17,11 +17,14 @@
     "compress:brotli": "node scripts/compress-brotli.js",
     "compress:gzip": "node scripts/compress-gzip.js",
     "serve": "http-server dist -p 8080 -c-1 --brotli --gzip",
-    "preview": "npm run build && npm run serve"
+    "preview": "npm run build && npm run serve",
+    "test": "npm run test:build && vitest run",
+    "test:build": "ZSTD_LEVEL=3 BROTLI_LEVEL=4 GZIP_LEVEL=6 npm run build"
   },
   "devDependencies": {
     "@fontsource/roboto": "^5.2.9",
     "@mongodb-js/zstd": "^2.0.1",
+    "@vitest/ui": "^4.0.16",
     "brotli": "^1.3.3",
     "firacode": "^6.2.0",
     "google-fonts-helper": "^3.7.3",
@@ -30,10 +33,13 @@
     "imagemin": "^9.0.1",
     "imagemin-mozjpeg": "^10.0.0",
     "imagemin-optipng": "^8.0.0",
+    "node-fetch": "^3.3.2",
     "opentype.js": "^1.3.4",
     "pako": "^2.1.0",
     "rimraf": "^6.0.1",
-    "sharp": "^0.34.5"
+    "serve-handler": "^6.1.5",
+    "sharp": "^0.34.5",
+    "vitest": "^4.0.16"
   },
   "keywords": [
     "personal-website",

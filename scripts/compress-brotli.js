@@ -9,7 +9,7 @@ import path from 'path';
 import brotli from 'brotli';
 
 const DIST_DIR = 'dist';
-const COMPRESSION_LEVEL = 11; // Maximum quality for static content
+const COMPRESSION_LEVEL = process.env.BROTLI_LEVEL ? parseInt(process.env.BROTLI_LEVEL, 10) : 11;
 const FILES_TO_COMPRESS = ['index.html'];
 
 async function compressFile(filePath) {
@@ -37,7 +37,7 @@ async function compressFile(filePath) {
 }
 
 async function main() {
-  console.log('\n🗜️  Compressing with Brotli (quality 11)...');
+  console.log(`\n🗜️  Compressing with Brotli (quality ${COMPRESSION_LEVEL})...`);
   
   for (const file of FILES_TO_COMPRESS) {
     const filePath = path.join(DIST_DIR, file);
