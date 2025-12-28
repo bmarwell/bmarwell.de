@@ -174,15 +174,18 @@ async function updateHTMLReferences() {
 
   let html = await fs.readFile(HTML_FILE, 'utf-8');
 
-  // Determine the avatar paths
   const avatarPath = `/${AVATAR_FILENAME}`;
   const avatarWebpPath = AVATAR_WEBP_FILENAME ? `/${AVATAR_WEBP_FILENAME}`
     : null;
   const avatarFullUrl = `https://bmarwell.de${avatarPath}`;
 
+  const metadata = await sharp(AVATAR_DEST).metadata();
+  const {width, height} = metadata;
+
   console.log(
     `  Using: ${avatarPath}${avatarWebpPath ? ' (with WebP: ' + avatarWebpPath
       + ')' : ''}`);
+  console.log(`  Dimensions: ${width}x${height}`);
 
   if (avatarWebpPath) {
     html = html.replace(
@@ -196,21 +199,30 @@ async function updateHTMLReferences() {
     `srcset="/avatar-150w.jpg 150w, /avatar-300w.jpg 300w, /avatar-460w.jpg 460w" sizes="(max-width: 460px) 150px, (max-width: 768px) 300px, 460px" src="${avatarPath}"`
   );
 
-  // Replace meta tags (use JPEG for social media - better compatibility)
   html = html.replace(
     /content="https:\/\/github\.com\/bmarwell\.png"/g,
     `content="${avatarFullUrl}"`
   );
 
-  // Replace JSON-LD (use JPEG)
   html = html.replace(
     /"image":\s*"https:\/\/github\.com\/bmarwell\.png"/g,
     `"image":"${avatarFullUrl}"`
   );
 
+  html = html.replace(
+    /<meta property="og:image:width" content="\d+">/g,
+    `<meta property="og:image:width" content="${width}">`
+  );
+
+  html = html.replace(
+    /<meta property="og:image:height" content="\d+">/g,
+    `<meta property="og:image:height" content="${height}">`
+  );
+
   await fs.writeFile(HTML_FILE, html);
   console.log(`✓ Updated HTML with ${avatarWebpPath
     ? 'picture element (WebP + JPEG fallback)' : 'img element'}`);
+  console.log(`✓ Updated OG image dimensions: ${width}x${height}`);
 }
 
 async function main() {

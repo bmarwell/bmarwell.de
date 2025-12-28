@@ -107,4 +107,17 @@ describe('HTML Content', () => {
     expect(html).not.toContain('github.com/bmarwell.png');
     expect(html).toContain('avatar-200w.webp');
   });
+
+  it('should have og:image dimensions set', async () => {
+    const response = await fetch(`${BASE_URL}/`);
+    const html = await response.text();
+    expect(html).toContain('property="og:image:width"');
+    expect(html).toContain('property="og:image:height"');
+    const widthMatch = html.match(/property="og:image:width"\s+content="(\d+)"/);
+    const heightMatch = html.match(/property="og:image:height"\s+content="(\d+)"/);
+    expect(widthMatch).toBeTruthy();
+    expect(heightMatch).toBeTruthy();
+    expect(parseInt(widthMatch[1])).toBeGreaterThan(0);
+    expect(parseInt(heightMatch[1])).toBeGreaterThan(0);
+  });
 });
