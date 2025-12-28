@@ -1,0 +1,91 @@
+# robots.txt for bmarwell.de
+# Benjamin Marwell - Apache Maven PMC | DevSecOps Engineer
+
+# Allow all well-behaved bots
+User-agent: *
+Allow: /
+
+# Disallow compressed variants (serve canonical versions)
+Disallow: /*.br$
+Disallow: /*.gz$
+Disallow: /*.zst$
+
+# Disallow Apache config files
+Disallow: /.htaccess
+
+# Disallow common WordPress paths (not used but often probed)
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/
+
+# Disallow common admin paths (not used but often probed)
+Disallow: /admin/
+Disallow: /administrator/
+
+# SEO: Sitemap location
+Sitemap: https://bmarwell.de/sitemap.xml
+
+# Crawl rate optimization (optional - Google/Bing respect this)
+# Request reasonable crawl delay to avoid overloading shared hosting
+Crawl-delay: 1
+
+# Allow major search engines explicitly (best practice)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Block known bad bots and scrapers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: Rogerbot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+# Allow AI scrapers (helpful for personal hub/landing page visibility)
+# User-agent: GPTBot
+# Allow: /
+#
+# User-agent: ChatGPT-User
+# Allow: /
+#
+# User-agent: CCBot
+# Allow: /
+#
+# User-agent: anthropic-ai
+# Allow: /
+#
+# User-agent: Claude-Web
+# Allow: /
+
+# Block archive.org Wayback Machine (optional - comment out if you want archival)
+# User-agent: ia_archiver
+# Disallow: /
