@@ -37,7 +37,7 @@ async function downloadAvatar() {
 
         if (response.statusCode !== 200) {
           reject(new Error(
-              `HTTP ${response.statusCode}: ${response.statusMessage}`));
+            `HTTP ${response.statusCode}: ${response.statusMessage}`));
           return;
         }
 
@@ -82,7 +82,7 @@ async function optimizeImage(filePath) {
   if (correctPath !== filePath) {
     await fs.rename(filePath, correctPath);
     console.log(
-        `  ✓ Renamed to correct extension: ${path.basename(correctPath)}`);
+      `  ✓ Renamed to correct extension: ${path.basename(correctPath)}`);
     // Update global
     AVATAR_FILENAME = path.basename(correctPath);
     AVATAR_DEST = correctPath;
@@ -90,8 +90,8 @@ async function optimizeImage(filePath) {
 
   // Optimize with imagemin
   const plugins = isPNG
-      ? [imageminOptipng({optimizationLevel: 7})]
-      : [imageminMozjpeg({quality: 85, progressive: true})];
+    ? [imageminOptipng({optimizationLevel: 7})]
+    : [imageminMozjpeg({quality: 85, progressive: true})];
 
   const optimized = await imagemin.buffer(originalBuffer, {plugins});
 
@@ -101,10 +101,10 @@ async function optimizeImage(filePath) {
     const savings = originalSize - optimized.length;
     const ratio = ((1 - optimized.length / originalSize) * 100).toFixed(2);
     console.log(
-        `  ✓ Optimized: ${originalSize} → ${optimized.length} bytes (saved ${savings} bytes, ${ratio}%)`);
+      `  ✓ Optimized: ${originalSize} → ${optimized.length} bytes (saved ${savings} bytes, ${ratio}%)`);
   } else {
     console.log(
-        `  ℹ️  Already optimal: ${originalSize} bytes (GitHub's version is well-optimized)`);
+      `  ℹ️  Already optimal: ${originalSize} bytes (GitHub's version is well-optimized)`);
   }
 
   // Create WebP version
@@ -112,37 +112,61 @@ async function optimizeImage(filePath) {
 }
 
 async function createWebP(sourcePath, originalSize) {
-  console.log('\n🖼️  Creating WebP version...');
+  console.log('\n🖼️  Creating WebP version and responsive sizes...');
 
   const webpPath = sourcePath.replace(/\.(jpg|jpeg|png)$/, '.webp');
 
-  // Try different quality levels to find one smaller than original
   const qualities = [80, 75, 70, 65, 60];
 
   for (const quality of qualities) {
     try {
       const webpBuffer = await sharp(sourcePath)
-      .webp({quality, effort: 6})
-      .toBuffer();
+        .webp({quality, effort: 6})
+        .toBuffer();
 
       if (webpBuffer.length < originalSize) {
         await fs.writeFile(webpPath, webpBuffer);
         const savings = originalSize - webpBuffer.length;
         const ratio = ((1 - webpBuffer.length / originalSize) * 100).toFixed(2);
         console.log(
-            `  ✓ WebP created: ${originalSize} → ${webpBuffer.length} bytes (saved ${savings}, ${ratio}% at quality ${quality})`);
+          `  ✓ WebP created: ${originalSize} → ${webpBuffer.length} bytes (saved ${savings}, ${ratio}% at quality ${quality})`);
 
-        // Update global to include webp
         AVATAR_WEBP_FILENAME = path.basename(webpPath);
-        return;
+        break;
       }
     } catch (error) {
       console.log(`  ⚠️  WebP quality ${quality} failed: ${error.message}`);
     }
   }
 
-  console.log(
+  if (!AVATAR_WEBP_FILENAME) {
+    console.log(
       `  ⚠️  Could not create WebP smaller than original ${originalSize} bytes`);
+  }
+
+  console.log('\n📐 Creating responsive sizes...');
+  const sizes = [150, 300, 460];
+
+  for (const size of sizes) {
+    const jpgPath = sourcePath.replace(/\.(jpg|jpeg|png)$/, `-${size}w.jpg`);
+    const webpResPath = sourcePath.replace(/\.(jpg|jpeg|png)$/,
+      `-${size}w.webp`);
+
+    const jpgBuffer = await sharp(sourcePath)
+      .resize(size, size, {fit: 'cover'})
+      .jpeg({quality: 85, mozjpeg: true})
+      .toBuffer();
+    await fs.writeFile(jpgPath, jpgBuffer);
+    console.log(`  ✓ ${path.basename(jpgPath)} (${jpgBuffer.length} bytes)`);
+
+    const webpResBuffer = await sharp(sourcePath)
+      .resize(size, size, {fit: 'cover'})
+      .webp({quality: 75, effort: 6})
+      .toBuffer();
+    await fs.writeFile(webpResPath, webpResBuffer);
+    console.log(
+      `  ✓ ${path.basename(webpResPath)} (${webpResBuffer.length} bytes)`);
+  }
 }
 
 async function updateHTMLReferences() {
@@ -153,43 +177,40 @@ async function updateHTMLReferences() {
   // Determine the avatar paths
   const avatarPath = `/${AVATAR_FILENAME}`;
   const avatarWebpPath = AVATAR_WEBP_FILENAME ? `/${AVATAR_WEBP_FILENAME}`
-      : null;
+    : null;
   const avatarFullUrl = `https://bmarwell.de${avatarPath}`;
 
   console.log(
-      `  Using: ${avatarPath}${avatarWebpPath ? ' (with WebP: ' + avatarWebpPath
-          + ')' : ''}`);
+    `  Using: ${avatarPath}${avatarWebpPath ? ' (with WebP: ' + avatarWebpPath
+      + ')' : ''}`);
 
-  // Replace picture element srcset and img src
   if (avatarWebpPath) {
-    // Update source srcset for WebP
     html = html.replace(
-        /srcset="https:\/\/github\.com\/bmarwell\.png"/g,
-        `srcset="${avatarWebpPath}"`
+      /srcset="https:\/\/github\.com\/bmarwell\.png"/g,
+      `srcset="/avatar-150w.webp 150w, /avatar-300w.webp 300w, /avatar-460w.webp 460w" sizes="(max-width: 460px) 150px, (max-width: 768px) 300px, 460px"`
     );
   }
 
-  // Update img src (fallback)
   html = html.replace(
-      /src="https:\/\/github\.com\/bmarwell\.png"/g,
-      `src="${avatarPath}"`
+    /src="https:\/\/github\.com\/bmarwell\.png"/g,
+    `srcset="/avatar-150w.jpg 150w, /avatar-300w.jpg 300w, /avatar-460w.jpg 460w" sizes="(max-width: 460px) 150px, (max-width: 768px) 300px, 460px" src="${avatarPath}"`
   );
 
   // Replace meta tags (use JPEG for social media - better compatibility)
   html = html.replace(
-      /content="https:\/\/github\.com\/bmarwell\.png"/g,
-      `content="${avatarFullUrl}"`
+    /content="https:\/\/github\.com\/bmarwell\.png"/g,
+    `content="${avatarFullUrl}"`
   );
 
   // Replace JSON-LD (use JPEG)
   html = html.replace(
-      /"image":\s*"https:\/\/github\.com\/bmarwell\.png"/g,
-      `"image":"${avatarFullUrl}"`
+    /"image":\s*"https:\/\/github\.com\/bmarwell\.png"/g,
+    `"image":"${avatarFullUrl}"`
   );
 
   await fs.writeFile(HTML_FILE, html);
   console.log(`✓ Updated HTML with ${avatarWebpPath
-      ? 'picture element (WebP + JPEG fallback)' : 'img element'}`);
+    ? 'picture element (WebP + JPEG fallback)' : 'img element'}`);
 }
 
 async function main() {
@@ -207,7 +228,7 @@ async function main() {
 
     console.log('\n✅ Avatar ready!\n');
     console.log(
-        'ℹ️  Note: Images are not pre-compressed (JPEG/PNG already optimal)\n');
+      'ℹ️  Note: Images are not pre-compressed (JPEG/PNG already optimal)\n');
   } catch (error) {
     console.error(`\n⚠️  Failed to download avatar: ${error.message}`);
     console.error('   Keeping external GitHub URL as fallback');
