@@ -104,6 +104,7 @@
       --card-bg: #ffffff;
       --text-main: #212121;
       --text-sub: #757575;
+      --accent: #336699;
       --shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
@@ -129,6 +130,31 @@
       border-radius: 50%;
       margin-bottom: 15px;
       background: url('https://gravatar.com/avatar/76b019aa23f8756fa9d99d794c69d982?s=200') center/cover;
+      border: 3px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+
+    header img:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 500;
+      margin: 15px 0 5px;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin: 5px 0;
+      color: var(--text-sub);
+    }
+
+    h2::before {
+      content: "▸ ";
+      color: var(--accent);
+      font-weight: 700;
     }
 
     /* Grid System */
@@ -185,6 +211,7 @@
       display: block;
       font-size: 1.1rem;
       font-weight: 500;
+      color: var(--accent);
     }
 
     .card-subtitle {
@@ -203,10 +230,12 @@
 <body>
 
 <header>
-  <picture>
-    <source srcset="https://github.com/bmarwell.png" type="image/webp">
-    <img src="https://github.com/bmarwell.png" alt="Benjamin Marwell">
-  </picture>
+  <a href="https://bmarwell.de/" rel="home">
+    <picture>
+      <source srcset="https://github.com/bmarwell.png" type="image/webp">
+      <img src="https://github.com/bmarwell.png" alt="Benjamin Marwell">
+    </picture>
+  </a>
   <h1>Benjamin Marwell</h1>
   <h2 style="font-size: 1.4rem; font-weight: 400; margin: 10px 0 0;">Apache Maven PMC Member | DevSecOps Engineer | Java Expert</h2>
   <p style="max-width: 900px; margin: 15px auto 0; line-height: 1.6; color: var(--text-sub);">
