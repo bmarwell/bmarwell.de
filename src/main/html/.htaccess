@@ -72,7 +72,8 @@ Options -Indexes
     BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
     
     # Compression level (1-9, default 6)
-    DeflateCompressionLevel 6
+    # DeflateCompressionLevel not allowed here
+    # DeflateCompressionLevel 6
 </IfModule>
 
 # Priority handling: Apache automatically selects the best compression
