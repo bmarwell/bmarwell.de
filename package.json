@@ -8,7 +8,7 @@
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "build": "npm run build:html && npm run build:fonts && npm run build:avatar && npm run build:favicon && npm run build:compress",
-    "build:html": "node scripts/build-html.js",
+    "build:html": "node scripts/build-html.js && node scripts/generate-sitemap.js",
     "build:fonts": "node scripts/copy-fonts.js",
     "build:avatar": "node scripts/download-avatar.js",
     "build:favicon": "node scripts/generate-favicon.js",
