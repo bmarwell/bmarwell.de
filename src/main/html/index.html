@@ -264,6 +264,13 @@
       line-height: 1.6;
     }
 
+    .pgp-fp {
+      font-size: 0.8rem;
+      word-break: normal;
+      overflow-wrap: anywhere;
+      line-height: 1.4;
+    }
+
     footer {
       margin-top: 60px;
       text-align: center;
@@ -302,7 +309,7 @@
   <h2>Connect &amp; Follow</h2>
 
   <div class="container">
-    <a href="https://blog.bmarwell.de" class="card" rel="me author"
+    <a href="https://blog.bmarwell.de" id="blog" class="card" rel="me author"
        title="Technical Blog - Deep dives into Maven, Java, Open Liberty, and infrastructure">
       <div class="card-icon">
         <svg viewBox="0 0 24 24" fill="#1976D2" aria-label="Blog icon">
@@ -317,7 +324,7 @@
       </div>
     </a>
 
-    <a href="https://github.com/bmarwell" class="card" rel="me"
+    <a href="https://github.com/bmarwell" id="github" class="card" rel="me"
        title="GitHub Profile - Explore my work on opinionated Java formatting (jfmt) and open-source contributions.">
       <div class="card-icon">
         <svg viewBox="0 0 24 24" fill="#333" aria-label="GitHub icon">
@@ -333,7 +340,7 @@
       </div>
     </a>
 
-    <a href="https://www.linkedin.com/in/bmarwell/" class="card" rel="me"
+    <a href="https://www.linkedin.com/in/bmarwell/" id="linkedin" class="card" rel="me"
        title="LinkedIn Profile - Connect with me and view my complete career trajectory and community engagement">
       <div class="card-icon">
         <svg viewBox="0 0 24 24" fill="#0A66C2" preserveAspectRatio="xMidYMid meet"
@@ -350,7 +357,7 @@
       </div>
     </a>
 
-    <a href="https://www.credly.com/users/bmarwell" class="card" rel="me"
+    <a href="https://www.credly.com/users/bmarwell" id="credly" class="card" rel="me"
        title="Credly - Digital showcase of my verified certifications and technical milestones">
       <div class="card-icon">
         <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-label="Credly icon">
@@ -368,7 +375,7 @@
       </div>
     </a>
 
-    <a href="https://home.apache.org/phonebook.html?uid=bmarwell" class="card" rel="me"
+    <a href="https://home.apache.org/phonebook.html?uid=bmarwell" id="apache" class="card" rel="me"
        title="Apache Phonebook - Profile at the Apache Software Foundation">
       <div class="card-icon">
         <svg viewBox="0 0 800 1231" xmlns="http://www.w3.org/2000/svg"
@@ -403,7 +410,7 @@
       </div>
     </a>
 
-    <a href="https://blog.bmarwell.de/talks.html" class="card" rel="me"
+    <a href="https://blog.bmarwell.de/talks.html" id="talks" class="card" rel="me"
        title="Conference Talks - Presentations on Maven and Java topics">
       <div class="card-icon">
         <svg viewBox="0 0 24 24" fill="#336699" xmlns="http://www.w3.org/2000/svg"
@@ -420,7 +427,7 @@
       </div>
     </a>
 
-    <a href="https://speakerdeck.com/bmarwell" class="card" rel="me"
+    <a href="https://speakerdeck.com/bmarwell" id="speakerdeck" class="card" rel="me"
        title="Speaker Deck - Slide decks from technical presentations">
       <div class="card-icon">
         <svg viewBox="0 0 32 20" xmlns="http://www.w3.org/2000/svg" aria-label="Speaker Deck icon">
@@ -436,7 +443,7 @@
       </div>
     </a>
 
-    <a href="https://stackoverflow.com/users/1549977/benjamin-marwell" class="card" rel="me"
+    <a href="https://stackoverflow.com/users/1549977/benjamin-marwell" id="stackoverflow" class="card" rel="me"
        title="Stack Overflow - Questions, answers, and community contributions">
       <div class="card-icon">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -452,7 +459,7 @@
       </div>
     </a>
 
-    <a href="https://bsky.app/profile/bmarwell.de" class="card" rel="me"
+    <a href="https://bsky.app/profile/bmarwell.de" id="bluesky" class="card" rel="me"
        title="Bluesky - Updates from the Java and Build Tools world">
       <div class="card-icon">
         <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision"
@@ -470,7 +477,7 @@
       </div>
     </a>
 
-    <a href="https://layer8.space/@bmarwell" class="card" rel="me"
+    <a href="https://layer8.space/@bmarwell" id="mastodon" class="card" rel="me"
        title="Mastodon - Technical microblogging and Fediverse chatter">
       <div class="card-icon">
         <svg viewBox="0 0 24 24" fill="#6364FF" aria-label="Mastodon icon">
@@ -493,7 +500,7 @@
     <meta itemprop="name" content="Benjamin Marwell">
 
     <div class="container">
-      <a href="/bmarwell.asc" class="card" rel="pgpkey authn" download
+      <a href="/bmarwell.asc" id="apache-pgp-key" class="card" rel="pgpkey authn" download
          title="Apache Software Foundation PGP Key - Verify signed Apache commits and releases"
          itemscope itemtype="https://schema.org/DigitalDocument">
         <div class="card-icon">
@@ -507,16 +514,14 @@
           <span class="card-title">Apache PGP Key</span>
           <span class="card-subtitle">bmarwell@apache.org</span>
           <div itemprop="identifier" itemscope itemtype="https://schema.org/PropertyValue">
-            <code itemprop="value" class="card-desc"
-                  style="font-size: 0.8rem; word-break: break-all;">1083 EA11 7629 CBDB F77F D606
-              0E59 3F2E D433 A5AD</code>
+            <code id="apache-pgp-fingerprint" itemprop="value" class="card-desc pgp-fp">1083 EA11 7629 CBDB F77F D606 0E59 3F2E D433 A5AD</code>
             <meta itemprop="name" content="Apache PGP Fingerprint">
             <meta itemprop="propertyID" content="PGP Fingerprint">
           </div>
         </div>
       </a>
 
-      <div class="card" rel="pgpkey" title="Personal PGP Public Key - For private communication">
+      <div id="personal-pgp-key" class="card" rel="pgpkey" title="Personal PGP Public Key - For private communication">
         <div class="card-icon">
           <svg viewBox="0 0 24 24" fill="#336699" xmlns="http://www.w3.org/2000/svg"
                aria-label="Personal PGP Key icon">
@@ -528,8 +533,7 @@
           <span class="card-title">Personal PGP Key</span>
           <span class="card-subtitle">private communication</span>
           <div itemprop="identifier" itemscope itemtype="https://schema.org/PropertyValue">
-            <code itemprop="value" class="card-desc"
-                  style="font-size: 0.8rem; word-break: break-all;">3160 5D40 DD2A 99F4</code>
+            <code id="personal-pgp-fingerprint" itemprop="value" class="card-desc pgp-fp">3160 5D40 DD2A 99F4</code>
             <meta itemprop="name" content="Personal PGP Fingerprint">
             <meta itemprop="propertyID" content="PGP Fingerprint">
           </div>
