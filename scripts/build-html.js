@@ -51,7 +51,7 @@ async function main() {
 
   // Copy static files
   console.log('  Copying static files...');
-  const staticFiles = ['.htaccess', 'robots.txt', 'bmarwell.asc'];
+  const staticFiles = ['.htaccess', 'robots.txt', 'bmarwell-apache.asc', 'bmarwell-personal.asc'];
   
   for (const file of staticFiles) {
     const src = path.join(SRC_DIR, file);

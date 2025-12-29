@@ -58,13 +58,14 @@
             "propertyID": "PGP Fingerprint",
             "name": "Apache PGP Key",
             "value": "1083 EA11 7629 CBDB F77F D606 0E59 3F2E D433 A5AD",
-            "url": "https://bmarwell.de/bmarwell.asc"
+            "url": "https://bmarwell.de/bmarwell-apache.asc"
           },
           {
             "@type": "PropertyValue",
             "propertyID": "PGP Fingerprint",
             "name": "Personal PGP Key",
-            "value": "3160 5D40 DD2A 99F4"
+            "value": "331C 8E5F F20D 3A48 C8E1 81A9 3160 5D40 DD2A 99F4",
+            "url": "https://bmarwell.de/bmarwell-personal.asc"
           }
         ],
         "sameAs": [
@@ -515,7 +516,7 @@
     <meta itemprop="name" content="Benjamin Marwell">
 
     <div class="container">
-      <a href="/bmarwell.asc" id="apache-pgp-key" class="card" rel="pgpkey authn" download
+      <a href="/bmarwell-apache.asc" id="apache-pgp-key" class="card" rel="pgpkey authn" download
          title="Apache Software Foundation PGP Key - Verify signed Apache commits and releases"
          itemscope itemtype="https://schema.org/DigitalDocument">
         <div class="card-icon">
@@ -536,7 +537,8 @@
         </div>
       </a>
 
-      <div id="personal-pgp-key" class="card" rel="pgpkey" title="Personal PGP Public Key - For private communication">
+      <a href="/bmarwell-personal.asc" id="personal-pgp-key" class="card" rel="pgpkey" download
+         title="Personal PGP Public Key - For private communication">
         <div class="card-icon">
           <svg viewBox="0 0 24 24" fill="#336699" xmlns="http://www.w3.org/2000/svg"
                aria-label="Personal PGP Key icon">
@@ -546,14 +548,14 @@
         </div>
         <div class="card-content">
           <span class="card-title">Personal PGP Key</span>
-          <span class="card-subtitle">private communication</span>
+          <span class="card-subtitle">bmarwell@gmail.com</span>
           <div itemprop="identifier" itemscope itemtype="https://schema.org/PropertyValue">
-            <code id="personal-pgp-fingerprint" itemprop="value" class="card-desc pgp-fp">3160 5D40 DD2A 99F4</code>
+            <code id="personal-pgp-fingerprint" itemprop="value" class="card-desc pgp-fp">331C 8E5F F20D 3A48 C8E1 81A9 3160 5D40 DD2A 99F4</code>
             <meta itemprop="name" content="Personal PGP Fingerprint">
             <meta itemprop="propertyID" content="PGP Fingerprint">
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 

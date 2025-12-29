@@ -10,7 +10,7 @@ import brotli from 'brotli';
 
 const DIST_DIR = 'dist';
 const COMPRESSION_LEVEL = process.env.BROTLI_LEVEL ? parseInt(process.env.BROTLI_LEVEL, 10) : 11;
-const FILES_TO_COMPRESS = ['index.html', 'bmarwell.asc'];
+const FILES_TO_COMPRESS = ['index.html', 'bmarwell-apache.asc', 'bmarwell-personal.asc'];
 
 async function compressFile(filePath) {
   try {
