@@ -10,7 +10,7 @@ import zstd from '@mongodb-js/zstd';
 
 const DIST_DIR = 'dist';
 const COMPRESSION_LEVEL = process.env.ZSTD_LEVEL ? parseInt(process.env.ZSTD_LEVEL, 10) : 22;
-const FILES_TO_COMPRESS = ['index.html'];
+const FILES_TO_COMPRESS = ['index.html', 'bmarwell.asc'];
 
 async function compressFile(filePath) {
   try {

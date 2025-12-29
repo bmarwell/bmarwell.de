@@ -10,7 +10,7 @@ import pako from 'pako';
 
 const DIST_DIR = 'dist';
 const COMPRESSION_LEVEL = process.env.GZIP_LEVEL ? parseInt(process.env.GZIP_LEVEL, 10) : 9;
-const FILES_TO_COMPRESS = ['index.html'];
+const FILES_TO_COMPRESS = ['index.html', 'bmarwell.asc'];
 
 async function compressFile(filePath) {
   try {
