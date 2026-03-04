@@ -82,7 +82,7 @@ describe('HTML Content', () => {
     const response = await fetch(`${BASE_URL}/`);
     const html = await response.text();
     expect(html).toContain('name="description"');
-    const match = html.match(/name="description"\s*content="([^"]+)"/);
+    const match = html.match(/name="description"\s+content="([^"]+)"/);
     expect(match).toBeTruthy();
     expect(match[1].length).toBeLessThanOrEqual(160);
   });
@@ -113,8 +113,8 @@ describe('HTML Content', () => {
     const html = await response.text();
     expect(html).toContain('property="og:image:width"');
     expect(html).toContain('property="og:image:height"');
-    const widthMatch = html.match(/property="og:image:width"\s*content="(\d+)"/);
-    const heightMatch = html.match(/property="og:image:height"\s*content="(\d+)"/);
+    const widthMatch = html.match(/property="og:image:width"\s+content="(\d+)"/);
+    const heightMatch = html.match(/property="og:image:height"\s+content="(\d+)"/);
     expect(widthMatch).toBeTruthy();
     expect(heightMatch).toBeTruthy();
     expect(parseInt(widthMatch[1])).toBeGreaterThan(0);
