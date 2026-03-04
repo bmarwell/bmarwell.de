@@ -41,6 +41,11 @@
     "sharp": "^0.34.5",
     "vitest": "^4.0.16"
   },
+  "trustedDependencies": [
+    "@mongodb-js/zstd",
+    "mozjpeg",
+    "optipng-bin"
+  ],
   "keywords": [
     "personal-website",
     "portfolio",

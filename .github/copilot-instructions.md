@@ -1,13 +1,15 @@
 # GitHub Copilot Instructions for bmarwell.de
 
+> **Also see**: [`.github/additional-instructions.md`](additional-instructions.md) for workflow orchestration, subagent strategy, and core principles that apply to all work in this repository.
+
 ## Project Overview
 This is a personal landing page and link hub for Benjamin Marwell, hosted at https://bmarwell.de/. The site is optimized for SEO, performance, and modern web standards.
 
 ## Build System
 - **Source**: `src/main/html/` (Maven-style structure)
 - **Output**: `dist/` directory
-- **Build tool**: npm scripts with Node.js
-- **Testing**: Use local HTTP server for testing (e.g., `npx http-server dist/`)
+- **Build tool**: Bun (package manager and script runner); scripts defined in `package.json`
+- **Testing**: Use local HTTP server for testing (e.g., `bunx http-server dist/`)
 - **Do NOT**: Include deployment commands (rsync) in the repository
 
 ## Code Style
@@ -101,8 +103,8 @@ This is a personal landing page and link hub for Benjamin Marwell, hosted at htt
 - **Reason**: Keep repository clean, avoid documentation drift
 
 ## Testing Workflow
-1. Run `npm run build` to build the site
-2. Start local server: `npx http-server dist/ -p 8080`
+1. Run `bun run build` to build the site
+2. Start local server: `bunx http-server dist/ -p 8080`
 3. Test in browser at http://localhost:8080
 4. Verify compression: Check for `.br`, `.gz`, `.zst` files in `dist/`
 5. Validate SEO: Check meta tags, structured data, accessibility attributes
@@ -114,7 +116,7 @@ This is a personal landing page and link hub for Benjamin Marwell, hosted at htt
 2. Add `<a>` with class `card`, `rel="me"`, and `title` attribute
 3. Include SVG icon with `aria-label`
 4. Follow existing card structure for consistency
-5. Rebuild and test
+5. Rebuild and test (`bun run build`)
 
 ### Updating fonts
 1. Modify `scripts/download-fonts.js` font configuration
