@@ -6,6 +6,7 @@ import {promises as fs} from 'fs';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import fetch from 'node-fetch';
+import sharp from 'sharp';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLOG_DIR = path.join(__dirname, '../dist/blog');
@@ -23,6 +24,7 @@ async function downloadBlogAssets() {
 
   for (const asset of ASSETS) {
     const jpegPath = path.join(BLOG_DIR, `${asset.base}.jpg`);
+    const webpPath = path.join(BLOG_DIR, `${asset.base}.webp`);
 
     let buffer;
     try {
@@ -36,6 +38,11 @@ async function downloadBlogAssets() {
 
     await fs.writeFile(jpegPath, buffer);
     console.log(`  ✓ ${asset.base}.jpg (${buffer.length} bytes)`);
+
+    const webpBuffer = await sharp(buffer).webp({quality: 85}).toBuffer();
+    await fs.writeFile(webpPath, webpBuffer);
+    const pct = Math.round((1 - webpBuffer.length / buffer.length) * 100);
+    console.log(`  ✓ ${asset.base}.webp (${webpBuffer.length} bytes, ${pct >= 0 ? pct + '% smaller' : Math.abs(pct) + '% larger than JPEG'})`);
   }
 
   console.log('✅ Blog assets ready!\n');
