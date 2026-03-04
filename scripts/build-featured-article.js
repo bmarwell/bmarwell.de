@@ -61,7 +61,10 @@ title="${esc(cfg.series.title)} \u2013 article series">${esc(cfg.series.title)}<
 
   return `<h2>From the Blog</h2><div class="container">\
 <article class="card card--featured" itemscope itemtype="https://schema.org/BlogPosting">\
-<meta itemprop="author" content="Benjamin Marwell">\
+<span itemprop="author" itemscope itemtype="https://schema.org/Person">\
+<meta itemprop="name" content="Benjamin Marwell">\
+<meta itemprop="url" content="https://bmarwell.de/">\
+</span>\
 <meta itemprop="url" content="${esc(cfg.url)}">${dateMeta}\
 <a href="${esc(cfg.url)}" class="card--featured__media" rel="author" tabindex="-1" aria-hidden="true" \
 title="${esc(cfg.title)} \u2013 featured image">\
