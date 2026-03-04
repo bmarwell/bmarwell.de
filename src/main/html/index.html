@@ -287,6 +287,83 @@
       line-height: 1.4;
     }
 
+    /* Featured Article Card */
+    article.card--featured {
+      padding: 0;
+      align-items: stretch;
+      flex-direction: column;
+      overflow: hidden;
+      grid-column: 1 / -1;
+    }
+
+    .card--featured__media {
+      display: block;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      flex-shrink: 0;
+    }
+
+    .card--featured__media picture,
+    .card--featured__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (min-width: 768px) {
+      article.card--featured {
+        flex-direction: row;
+      }
+
+      .card--featured__media {
+        flex: 0 0 55%;
+        max-width: 55%;
+        aspect-ratio: auto;
+      }
+    }
+
+    .card--featured__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      padding: 20px;
+    }
+
+    .card--featured__label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+    }
+
+    .card--featured__title-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card--featured__title-link:hover .card-title {
+      text-decoration: underline;
+    }
+
+    .card--featured__series {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+
+    .card--featured__series a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .card--featured__series a:hover {
+      text-decoration: underline;
+    }
+
     footer {
       margin-top: 60px;
       text-align: center;
@@ -508,6 +585,48 @@
       </div>
     </a>
 
+  </div>
+
+  <h2>From the Blog</h2>
+
+  <div class="container">
+    <article class="card card--featured"
+             itemscope itemtype="https://schema.org/BlogPosting">
+      <meta itemprop="datePublished" content="2024-05-23">
+      <meta itemprop="author" content="Benjamin Marwell">
+      <meta itemprop="url" content="https://blog.bmarwell.de/2024/05/23/parallel-unit-tests-apache-maven.html">
+      <a href="https://blog.bmarwell.de/2024/05/23/parallel-unit-tests-apache-maven.html"
+         class="card--featured__media"
+         rel="author"
+         tabindex="-1"
+         aria-hidden="true"
+         title="Guide: Parallel unit tests with Apache Maven – featured image">
+        <img src="/blog/featured-parallel-maven.jpg"
+             alt="Railway tracks symbolising parallel build pipelines – illustration for the Apache Maven parallel unit tests guide"
+             width="800" height="420"
+             loading="lazy"
+             decoding="async"
+             itemprop="image">
+      </a>
+      <div class="card--featured__body">
+        <span class="card--featured__label">Featured Article · May&nbsp;2024</span>
+        <a href="https://blog.bmarwell.de/2024/05/23/parallel-unit-tests-apache-maven.html"
+           class="card--featured__title-link"
+           rel="author"
+           title="Guide: Parallel unit tests with Apache Maven – read on blog.bmarwell.de">
+          <span class="card-title" itemprop="headline">Guide: Parallel unit tests with Apache Maven</span>
+        </a>
+        <span class="card-subtitle">blog.bmarwell.de</span>
+        <p class="card-desc" itemprop="description">Enabling parallel unit tests is the easiest way to
+          accelerate your Apache Maven builds. Covers JUnit&nbsp;Jupiter, Maven&nbsp;Surefire,
+          and avoiding concurrency pitfalls.</p>
+        <p class="card--featured__series">Part of the
+          <a href="https://blog.bmarwell.de/talks/accelerating-maven-builds.html"
+             rel="author"
+             title="Accelerating Maven Builds – talk series by Benjamin Marwell and Maarten Mulders">Accelerating Maven Builds</a>
+          series.</p>
+      </div>
+    </article>
   </div>
 
   <h2>Identity &amp; Security</h2>
