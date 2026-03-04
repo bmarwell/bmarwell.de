@@ -6,20 +6,20 @@
   "type": "module",
   "scripts": {
     "clean": "rimraf dist",
-    "prebuild": "npm run clean",
-    "build": "npm run build:html && npm run build:fonts && npm run build:avatar && npm run build:favicon && npm run build:compress",
+    "prebuild": "bun run clean",
+    "build": "bun run build:html && bun run build:fonts && bun run build:avatar && bun run build:favicon && bun run build:compress",
     "build:html": "node scripts/build-html.js && node scripts/generate-sitemap.js",
     "build:fonts": "node scripts/copy-fonts.js",
     "build:avatar": "node scripts/download-avatar.js",
     "build:favicon": "node scripts/generate-favicon.js",
-    "build:compress": "npm run compress:zstd && npm run compress:brotli && npm run compress:gzip",
+    "build:compress": "bun run compress:zstd && bun run compress:brotli && bun run compress:gzip",
     "compress:zstd": "node scripts/compress-zstd.js",
     "compress:brotli": "node scripts/compress-brotli.js",
     "compress:gzip": "node scripts/compress-gzip.js",
     "serve": "http-server dist -p 8080 -c-1 --brotli --gzip",
-    "preview": "npm run build && npm run serve",
-    "test": "npm run test:build && vitest run",
-    "test:build": "ZSTD_LEVEL=3 BROTLI_LEVEL=4 GZIP_LEVEL=6 npm run build"
+    "preview": "bun run build && bun run serve",
+    "test": "bun run test:build && vitest run",
+    "test:build": "ZSTD_LEVEL=3 BROTLI_LEVEL=4 GZIP_LEVEL=6 bun run build"
   },
   "devDependencies": {
     "@fontsource/roboto": "^5.2.9",

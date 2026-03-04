@@ -35,7 +35,7 @@ async function copyFonts() {
       console.log(`✓ ${font} - ${stats.size} bytes`);
     } catch (error) {
       console.error(`✗ Failed to copy ${font}:`, error.message);
-      console.error('   Make sure @fontsource/roboto is installed: npm install');
+      console.error('   Make sure @fontsource/roboto is installed: bun install');
       process.exit(1); // Fail build if font download fails
     }
   }
