@@ -3,3 +3,27 @@
 Landing page / hub of bmarwell.de plus linktree Benjamin Marwell.
 
 This repository will only host a single static HTML site.
+
+== Getting started
+
+[source,shell]
+----
+bun install           # install dependencies (runs native lifecycle scripts automatically)
+bun run build         # full production build → dist/
+bun run test          # build (fast compression) + run vitest suite
+bun run preview       # build + serve at http://localhost:8080
+----
+
+=== Useful one-liners
+
+[source,shell]
+----
+# Local dev server against an existing dist/
+bunx http-server dist -p 8080 -c-1 --brotli --gzip
+
+# CI-style build with reduced compression levels (faster)
+ZSTD_LEVEL=3 BROTLI_LEVEL=4 GZIP_LEVEL=6 bun run build
+
+# Test the workflow locally (requires act + Docker/Podman)
+act -j build
+----

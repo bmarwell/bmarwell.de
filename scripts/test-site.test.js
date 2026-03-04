@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:8080';
 let serverProcess;
 
 beforeAll(async () => {
-  serverProcess = spawn('npx', ['http-server', 'dist', '-p', '8080', '-c-1', '--brotli', '--gzip'], {
+  serverProcess = spawn('bunx', ['http-server', 'dist', '-p', '8080', '-c-1', '--brotli', '--gzip'], {
     stdio: 'ignore'
   });
   await setTimeout(2000);
@@ -30,12 +30,12 @@ describe('Content-Type Headers', () => {
   });
 
   it('should serve WebP images with correct content-type', async () => {
-    const response = await fetch(`${BASE_URL}/avatar-200w.webp`);
+    const response = await fetch(`${BASE_URL}/avatar-460w.webp`);
     expect(response.headers.get('content-type')).toMatch(/image\/webp/);
   });
 
   it('should serve JPEG images with correct content-type', async () => {
-    const response = await fetch(`${BASE_URL}/avatar-200w.jpg`);
+    const response = await fetch(`${BASE_URL}/avatar-460w.jpg`);
     expect(response.headers.get('content-type')).toMatch(/image\/jpeg/);
   });
 
@@ -50,7 +50,7 @@ describe('Content-Type Headers', () => {
   });
 
   it('should serve WOFF2 fonts with correct content-type', async () => {
-    const response = await fetch(`${BASE_URL}/fonts/roboto-v32-latin-regular.woff2`);
+    const response = await fetch(`${BASE_URL}/fonts/roboto-latin-400-normal.woff2`);
     expect(response.headers.get('content-type')).toMatch(/font\/woff2|application\/font-woff2/);
   });
 });
@@ -65,7 +65,7 @@ describe('Compression', () => {
   });
 
   it('should not double-compress already compressed fonts', async () => {
-    const response = await fetch(`${BASE_URL}/fonts/roboto-v32-latin-regular.woff2`);
+    const response = await fetch(`${BASE_URL}/fonts/roboto-latin-400-normal.woff2`);
     expect(response.headers.get('content-encoding')).toBeNull();
   });
 });
@@ -82,7 +82,7 @@ describe('HTML Content', () => {
     const response = await fetch(`${BASE_URL}/`);
     const html = await response.text();
     expect(html).toContain('name="description"');
-    const match = html.match(/name="description"\s+content="([^"]+)"/);
+    const match = html.match(/name="description"\s*content="([^"]+)"/);
     expect(match).toBeTruthy();
     expect(match[1].length).toBeLessThanOrEqual(160);
   });
@@ -105,7 +105,7 @@ describe('HTML Content', () => {
     const response = await fetch(`${BASE_URL}/`);
     const html = await response.text();
     expect(html).not.toContain('github.com/bmarwell.png');
-    expect(html).toContain('avatar-200w.webp');
+    expect(html).toContain('avatar.webp');
   });
 
   it('should have og:image dimensions set', async () => {
@@ -113,8 +113,8 @@ describe('HTML Content', () => {
     const html = await response.text();
     expect(html).toContain('property="og:image:width"');
     expect(html).toContain('property="og:image:height"');
-    const widthMatch = html.match(/property="og:image:width"\s+content="(\d+)"/);
-    const heightMatch = html.match(/property="og:image:height"\s+content="(\d+)"/);
+    const widthMatch = html.match(/property="og:image:width"\s*content="(\d+)"/);
+    const heightMatch = html.match(/property="og:image:height"\s*content="(\d+)"/);
     expect(widthMatch).toBeTruthy();
     expect(heightMatch).toBeTruthy();
     expect(parseInt(widthMatch[1])).toBeGreaterThan(0);
