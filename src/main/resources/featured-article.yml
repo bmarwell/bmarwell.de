@@ -1,0 +1,18 @@
+# Featured article card shown between "Connect & Follow" and "Identity & Security".
+# Set enabled: false to hide the section entirely.
+enabled: true
+
+title: "Guide: Parallel unit tests with Apache Maven"
+url: "https://blog.bmarwell.de/2024/05/23/parallel-unit-tests-apache-maven.html"
+abstract: >
+  Enabling parallel unit tests is the easiest way to accelerate your Apache Maven builds.
+  Covers JUnit Jupiter, Maven Surefire, and avoiding concurrency pitfalls.
+image_url: "https://blog.bmarwell.de/2024/05/23/track-railway-railroad-train-travel-transportation-942713-pxhere-1200x630.com-800w.jpg"
+
+# Optional: YYYY-MM-DD. Parsed automatically from the URL path if omitted.
+date_published: "2024-05-23"
+
+# Optional: omit this block entirely if the article is not part of a series.
+series:
+  title: "Accelerating Maven Builds"
+  url: "https://blog.bmarwell.de/talks/accelerating-maven-builds.html"

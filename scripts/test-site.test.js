@@ -120,4 +120,16 @@ describe('HTML Content', () => {
     expect(parseInt(widthMatch[1])).toBeGreaterThan(0);
     expect(parseInt(heightMatch[1])).toBeGreaterThan(0);
   });
+
+  it('should serve featured article JPEG', async () => {
+    const response = await fetch(`${BASE_URL}/blog/featured-article.jpg`);
+    expect(response.status).toBe(200);
+    expect(response.headers.get('content-type')).toMatch(/image\/jpeg/);
+  });
+
+  it('should serve featured article WebP', async () => {
+    const response = await fetch(`${BASE_URL}/blog/featured-article.webp`);
+    expect(response.status).toBe(200);
+    expect(response.headers.get('content-type')).toMatch(/image\/webp/);
+  });
 });

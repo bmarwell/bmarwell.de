@@ -123,7 +123,29 @@ This is a personal landing page and link hub for Benjamin Marwell, hosted at htt
 2. Update inline `@font-face` declarations in HTML
 3. Rebuild - fonts are downloaded and copied automatically
 
-### Changing compression settings
+### Switching the Featured Article
+The featured article card is fully configured via `src/main/resources/featured-article.yml`.
+The build script (`scripts/build-featured-article.js`) reads this file, downloads the image, and
+injects the card into `dist/index.html` at the `<div id="featured-article-slot"></div>` placeholder.
+
+**To change the featured article:**
+1. Edit `src/main/resources/featured-article.yml` with the new article's data:
+   - `title` — article headline
+   - `url` — canonical article URL
+   - `abstract` — 1–3 sentence teaser shown in the card
+   - `image_url` — URL of the featured image (downloaded at build time as JPEG + WebP)
+   - `date_published` — `YYYY-MM-DD` (optional; auto-parsed from `/YYYY/MM/DD/` in URL)
+   - `series` block with `title` + `url` (optional; omit if article is standalone)
+2. Run `bun run build` to download the new image and regenerate the site.
+3. `rel="author"` goes on article links; `rel="related"` goes on series/collection links.
+
+**To disable the featured article entirely:**
+Set `enabled: false` in `featured-article.yml`. The placeholder is removed from the output.
+
+**Image naming**: regardless of the source URL, images are always saved as
+`dist/blog/featured-article.jpg` and `dist/blog/featured-article.webp`.
+
+
 1. Zstandard: Edit `scripts/compress-zstd.js` (currently level 19)
 2. Brotli: Edit `scripts/compress-brotli.js` (currently level 11)
 3. Gzip: Edit `scripts/compress-gzip.js` (currently level 9)

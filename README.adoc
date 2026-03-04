@@ -27,3 +27,33 @@ ZSTD_LEVEL=3 BROTLI_LEVEL=4 GZIP_LEVEL=6 bun run build
 # Test the workflow locally (requires act + Docker/Podman)
 act -j build
 ----
+
+== Featured Article
+
+The "From the Blog" card between _Connect & Follow_ and _Identity & Security_ is
+driven by `src/main/resources/featured-article.yml`.
+The build downloads the image at build time and injects the card into the output HTML.
+
+=== Changing the featured article
+
+. Edit `src/main/resources/featured-article.yml`:
++
+[source,yaml]
+----
+enabled: true
+title: "Your Article Title"
+url: "https://blog.bmarwell.de/YYYY/MM/DD/slug.html"
+abstract: >
+  Short teaser text shown in the card.
+image_url: "https://example.com/path/to/featured-image.jpg"
+# date_published is optional; auto-parsed from the URL path if omitted
+date_published: "YYYY-MM-DD"
+# series is optional; omit entirely for standalone articles
+series:
+  title: "Series Name"
+  url: "https://blog.bmarwell.de/talks/series-slug.html"
+----
+. Run `bun run build`.
+
+To hide the card entirely, set `enabled: false`.
+
